@@ -11,18 +11,19 @@
 
 ## Summary
 
-- **Total Test Cases**: 20 
+- **Total Test Cases**: 21 
 - **Passed**: 12 
-- **Failed**: 4  
+- **Failed**: 5  
 - **Pending**: 4 
 
-
 ---
+
 ## Observations & Defects
 
 1. **Login**  
    - Wrong password still logs in (Security bug).  
    - Short password accepted (Policy mismatch with Register API).  
+   - Redis deletion breaks login (Dependency issue).  
 
 2. **Profile Fetch & Update**  
    - Returning `403 Access Denied` instead of proper profile access for valid JWT.  
@@ -61,6 +62,7 @@
 | LOG-003 | Wrong password | Correct email + wrong pass | 401 Invalid credentials | 200 Logged in | ❌ Fail | Password validation missing |
 | LOG-004 | Short password (2 letters) | `"password": "ab"` | 400 Password must be at least 4 characters | Accepted login | ❌ Fail | Policy inconsistent with Register |
 | LOG-005 | Empty password | `"password": ""` | 400 Error: password not allowed empty | Got 400 | ✅ Pass | - |
+| LOG-006 | Redis session/user cache deleted | Correct email & password after Redis deletion | 200 Success + JWT | 400 Invalid credentials | ❌ Fail | Login flow tightly coupled with Redis |
 
 ---
 
@@ -93,7 +95,7 @@
 ## Conclusion
 
 - **Register API** is stable with proper validations.  
-- **Login API** has critical issues with password validation.  
+- **Login API** has critical issues with password validation and cache dependency.  
 - **Profile APIs** are blocked due to permission errors.  
 - Needs fixes before moving to Version-1 testing.  
 
