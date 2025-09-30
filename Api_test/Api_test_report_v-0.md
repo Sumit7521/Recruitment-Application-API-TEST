@@ -11,10 +11,10 @@
 
 ## Summary
 
-- **Total Test Cases**: 17  
-- **Passed**: 11  
+- **Total Test Cases**: 20 
+- **Passed**: 12 
 - **Failed**: 4  
-- **Pending**: 2  
+- **Pending**: 4 
 
 
 ---
